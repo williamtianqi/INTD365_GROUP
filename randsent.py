@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
-"""
-601.465/665 — Natural Language Processing
-Assignment 1: Designing Context-Free Grammars
-Test
 
+"""
+Natural Language Processing
+Assignment: Designing Context-Free Grammars
+Re-Write Co-Authots: Pedro, Ravneet, Tianqui
 
 """
 import os
@@ -153,13 +152,40 @@ def main():
             start_symbol=args.start_symbol
         )
 
-        # Print the sentence with the specified format.
-        # If it's a tree, we'll pipe the output through the prettyprint script.
+        # If it's a tree, print the formatted tree structure
         if args.tree:
-            prettyprint_path = os.path.join(os.getcwd(), 'prettyprint')
-            t = os.system(f"echo '{sentence}' | perl {prettyprint_path}")
+            formatted_tree = format_tree(sentence)
+            print(formatted_tree)
         else:
             print(sentence)
+
+#1.3 Printing Trees
+
+def format_tree(sentence):
+    # Split the sentence into tokens
+    tokens = sentence.split()
+
+    # Initialize variables for tracking parentheses
+    open_parentheses = 0
+    formatted_tree = ""
+
+    # Iterate through tokens to format the tree structure
+    for token in tokens:
+        if token.isupper():
+            # Nonterminal symbol (e.g., NP, VP)
+            formatted_tree += f"({token} "
+            open_parentheses += 1
+        elif token == ".":
+            # End of the sentence
+            formatted_tree += ")"
+        else:
+            # Terminal symbol or word
+            formatted_tree += f"{token} "
+
+    # Add closing parentheses for any remaining open parentheses
+    formatted_tree += (open_parentheses * ") ")
+
+    return formatted_tree.strip()
 
 if __name__ == "__main__":
     main()
