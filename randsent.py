@@ -26,7 +26,7 @@ class Grammar:
         self._load_rules_from_file(grammar_file)
 
     def _load_rules_from_file(self, grammar_file):
-        """
+        """     
         Read grammar file and store its rules in self.rules
 
         Args:
@@ -45,8 +45,14 @@ class Grammar:
                             self.rules[rule_id] = {"nonterminal": nonterminal, "production": production}
                     elif current_rule:
                         current_rule["production"] += f" {line}"
-                else:
-                    current_rule = None
+                    else:
+                        current_rule = None
+
+        # Print loaded rules for debugging
+        for rule_id, rule in self.rules.items():
+            print(f"Rule {rule_id}: {rule['nonterminal']} -> {rule['production']}")
+
+
 
     def _expand(self, symbol):
         """
@@ -82,8 +88,10 @@ class Grammar:
             sentence.extend(expansion)
 
         if derivation_tree:
+            print("Derivation Tree Sentence:", " ".join(sentence))  # Add this line for debugging
             return " ".join(sentence)
         else:
+            print("Generated Sentence:", " ".join([token for token in sentence if not token.isupper()]))  # for debugging
             return " ".join([token for token in sentence if not token.isupper()])
 
 def parse_args():
@@ -139,6 +147,9 @@ def parse_args():
 def main():
     # Parse command-line options
     args = parse_args()
+
+    # Print the grammar file path
+    print("Grammar File:", args.grammar)
 
     # Initialize Grammar object
     grammar = Grammar(args.grammar)
