@@ -1,98 +1,33 @@
-
+#!/usr/bin/env python3
 """
-Natural Language Processing
-Assignment: Designing Context-Free Grammars
-Re-Write Co-Authots: Pedro, Ravneet, Tianqui
+601.465/665 — Natural Language Processing
+Assignment 1: Designing Context-Free Grammars
 
+Assignment written by Jason Eisner
+Modified by Kevin Duh
+Re-modified by Alexandra DeLucia
+
+Code template written by Alexandra DeLucia,
+based on the submitted assignment with Keith Harrigian
+and Carlos Aguirre Fall 2019
 """
 import os
 import sys
 import random
 import argparse
 
-class Grammar:
-
-    def __init__(self, grammar_file):
-        """
-        Context-Free Grammar (CFG) Sentence Generator
-
-        Args:
-            grammar_file (str): Path to a .gr grammar file
-
-        Returns:
-            self
-        """
-        self.rules = {}  # Dictionary to store grammar rules
-        self._load_rules_from_file(grammar_file)
-
-    def _load_rules_from_file(self, grammar_file):
-        """     
-        Read grammar file and store its rules in self.rules
-
-        Args:
-            grammar_file (str): Path to the raw grammar file
-        """
-        with open(grammar_file, 'r') as file:
-            current_rule = None
-            for line in file:
-                line = line.strip()
-                if line and not line.startswith("#"):
-                    parts = line.split(None, 2)
-                    if len(parts) == 3 and parts[0].isdigit():
-                        rule_id, nonterminal, production = parts
-                        rule_id = int(rule_id)
-                        if rule_id not in self.rules:
-                            self.rules[rule_id] = {"nonterminal": nonterminal, "production": production}
-                    elif current_rule:
-                        current_rule["production"] += f" {line}"
-                    else:
-                        current_rule = None
-
-        # Print loaded rules for debugging
-        for rule_id, rule in self.rules.items():
-            print(f"Rule {rule_id}: {rule['nonterminal']} -> {rule['production']}")
-
-
-
-    def _expand(self, symbol):
-        """
-        Expand a nonterminal symbol into its production rule
-
-        Args:
-            symbol (str): The nonterminal symbol to expand
-
-        Returns:
-            list: The expanded production rule as a list of tokens
-        """
-        if symbol in self.rules:
-            production = self.rules[symbol]["production"]
-            return production.split()
-        else:
-            return [symbol]
-
-    def sample(self, derivation_tree, max_expansions, start_symbol):
-        sentence = []
-        stack = [(start_symbol, 0)]  # Initialize the stack with the start symbol
-
-        while stack:
-            symbol, expansions = stack.pop()
-
-            if expansions >= max_expansions:
-                continue  # Avoid excessive expansions
-
-            expansion = self._expand(symbol)
-
-            for token in reversed(expansion):
-                stack.append((token, expansions + 1))
-
-            sentence.extend(expansion)
-
-        if derivation_tree:
-            print("Derivation Tree Sentence:", " ".join(sentence))  # Add this line for debugging
-            return " ".join(sentence)
-        else:
-            print("Generated Sentence:", " ".join([token for token in sentence if not token.isupper()]))  # for debugging
-            return " ".join([token for token in sentence if not token.isupper()])
+# Want to know what command-line arguments a program allows?
+# Commonly you can ask by passing it the --help option, like this:
+#     python randsent.py --help
+# This is possible for any program that processes its command-line
+# arguments using the argparse module, as we do below.
+#
+# NOTE: When you use the Python argparse module, parse_args() is the
+# traditional name for the function that you create to analyze the
+# command line.  Parsing the command line is different from parsing a
+# natural-language sentence.  It's easier.  But in both cases,
+# "parsing" a string means identifying the elements of the string and
+# the roles they play.
 
 def parse_args():
     """
@@ -144,12 +79,103 @@ def parse_args():
     )
     return parser.parse_args()
 
+
+class Grammar:
+    def __init__(self, grammar_file):
+        """
+        Context-Free Grammar (CFG) Sentence Generator
+
+        Args:
+            grammar_file (str): Path to a .gr grammar file
+
+        Returns:
+            self
+        """
+        self.rules = {}
+        self._load_rules_from_file(grammar_file)
+
+    def _load_rules_from_file(self, grammar_file):
+        """
+        Read grammar file and store its rules in self.rules
+
+        Args:
+            grammar_file (str): Path to the raw grammar file
+        """
+        with open(grammar_file, 'r') as file:
+            for line in file:
+                # Skip comments and empty lines
+                if line.startswith("#") or line.strip() == "":
+                    continue
+
+                # Split the line into rule components
+                parts = line.strip().split()
+
+                rule_id, nonterminal, *production = parts
+
+                if nonterminal not in self.rules:
+                    self.rules[nonterminal] = []
+
+                self.rules[nonterminal].append(production)
+
+    def sample(self, derivation_tree, max_expansions, start_symbol):
+        """
+        Sample a random sentence from this grammar
+
+        Args:
+            derivation_tree (bool): if true, the returned string will represent
+                the tree (using bracket notation) that records how the sentence
+                was derived
+
+            max_expansions (int): max number of nonterminal expansions we allow
+
+            start_symbol (str): start symbol to generate from
+
+        Returns:
+            str: the random sentence or its derivation tree
+        """
+
+        if start_symbol not in self.rules:
+            raise ValueError(f"Start symbol '{start_symbol}' not found in grammar rules.")
+
+        # Helper function to recursively expand nonterminals and build the tree
+        def expand_nonterminal_and_build_tree(symbol, depth):
+            if depth > max_expansions:
+                return [], f'({symbol})'
+
+            if symbol not in self.rules:
+                return [symbol], f'({symbol})'
+
+            chosen_rule = random.choice(self.rules[symbol])
+
+            expansion = []
+            tree_parts = [f'({symbol}']
+
+            for sub_symbol in chosen_rule:
+                sub_expansion, sub_tree = expand_nonterminal_and_build_tree(sub_symbol, depth + 1)
+                expansion += sub_expansion
+                tree_parts.append(sub_tree)
+
+            tree_parts.append(')')
+            return expansion, ' '.join(tree_parts)
+
+        sentence, tree = expand_nonterminal_and_build_tree(start_symbol, depth=0)
+
+        if derivation_tree:
+            return tree
+        else:
+            return ' '.join(sentence)
+
+
+
+            
+
+
+####################
+### Main Program
+####################
 def main():
     # Parse command-line options
     args = parse_args()
-
-    # Print the grammar file path
-    print("Grammar File:", args.grammar)
 
     # Initialize Grammar object
     grammar = Grammar(args.grammar)
@@ -163,40 +189,14 @@ def main():
             start_symbol=args.start_symbol
         )
 
-        # If it's a tree, print the formatted tree structure
+        # Print the sentence with the specified format.
+        # If it's a tree, we'll pipe the output through the prettyprint script.
         if args.tree:
-            formatted_tree = format_tree(sentence)
-            print(formatted_tree)
+            prettyprint_path = os.path.join(os.getcwd(), 'prettyprint')
+            t = os.system(f"echo '{sentence}' | perl {prettyprint_path}")
         else:
             print(sentence)
 
-#1.3 Printing Trees
-
-def format_tree(sentence):
-    # Split the sentence into tokens
-    tokens = sentence.split()
-
-    # Initialize variables for tracking parentheses
-    open_parentheses = 0
-    formatted_tree = ""
-
-    # Iterate through tokens to format the tree structure
-    for token in tokens:
-        if token.isupper():
-            # Nonterminal symbol (e.g., NP, VP)
-            formatted_tree += f"({token} "
-            open_parentheses += 1
-        elif token == ".":
-            # End of the sentence
-            formatted_tree += ")"
-        else:
-            # Terminal symbol or word
-            formatted_tree += f"{token} "
-
-    # Add closing parentheses for any remaining open parentheses
-    formatted_tree += (open_parentheses * ") ")
-
-    return formatted_tree.strip()
 
 if __name__ == "__main__":
     main()
