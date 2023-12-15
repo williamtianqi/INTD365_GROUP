@@ -116,6 +116,7 @@ python randsent.py -g grammar.gr -M 5 -n 2 --tree
 
 (you can change 2, to 1 for a simple sentence rather than 2 sentences)
 
+Summmary Section 1:
 
 
 The random sentence generator, built on a Probabilistic Context-Free Grammar (PCFG), crafts grammatically varied sentences. Examples like 'a president understood every sandwich!' highlight the PCFG's probabilistic nature, blending terminals and nonterminals creatively. The --tree option reveals structural insights, from clear subject-verb-object patterns to complex clauses.
@@ -255,7 +256,7 @@ in in
 pickle under under under
 pickle with in a under in pickled floor
 
-#comments
+Final thoughts: 
 
 Enhancing Sentence Generation with PCFG Adjustments
 In refining a Probabilistic Context-Free Grammar (PCFG)-based sentence generator, strategic modifications 
@@ -278,7 +279,7 @@ Random Sentences - grammar2.gr and grammar3.gr:
 - "A chief of staff understood every perplexed sandwich floor chief of staff!"
 - "Fine fine chief of staff" and "A pickle in with delicious" illustrate diverse structures.
 
-Sumarry:
+Summary Section 2:
 Iterative adjustments in PCFG parameters have successfully 
 transformed the sentence generator. The output now not only adheres to grammatical 
 structures but also exhibits enhanced naturalness and varied sentence forms, showcasing the 
