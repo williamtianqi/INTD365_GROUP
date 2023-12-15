@@ -240,7 +240,15 @@ the delicious floor with a floor with the perplexed floor kissed a delicious flo
 
 10. Provide 10 random sentences generated with grammar3.gr that illustrate your modifications.
 
+We have now modiffied our CFG into a PCFG.
+CFG is a context free grammar and PCFG is a probabilistic context free grammar.
 
+For example -> 
+1 N A
+2 N B
+
+here, B is twice as likely to be chosen as the Noun for our sentence.
+Adjusting these relative probabilities allows us to have greater control on sentence generation.
 
 python randsent.py -g grammar3.gr -M 6 -n 10 -s NP
 
