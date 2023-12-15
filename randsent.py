@@ -5,11 +5,7 @@ Assignment 1: Designing Context-Free Grammars
 
 Assignment written by Jason Eisner
 Modified by Kevin Duh
-Re-modified by Alexandra DeLucia
-
-Code template written by Alexandra DeLucia,
-based on the submitted assignment with Keith Harrigian
-and Carlos Aguirre Fall 2019
+Re-modified by Ravneet, Tianqui, Pedro
 """
 import os
 import sys
