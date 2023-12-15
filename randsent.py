@@ -183,11 +183,20 @@ def main():
     # Generate sentences
     for i in range(args.num_sentences):
         # Use Grammar object to generate sentence
-        sentence = grammar.sample(
-            derivation_tree=args.tree,
-            max_expansions=args.max_expansions,
-            start_symbol=args.start_symbol
-        )
+        if args.start_symbol:
+            # Start generation from the specified symbol
+            sentence = grammar.sample(
+                derivation_tree=args.tree,
+                max_expansions=args.max_expansions,
+                start_symbol=args.start_symbol
+            )
+        else:
+            # Generate full sentences starting from ROOT
+            sentence = grammar.sample(
+                derivation_tree=args.tree,
+                max_expansions=args.max_expansions,
+                start_symbol=args.start_symbol
+            )
 
         # Print the sentence with the specified format.
         # If it's a tree, we'll pipe the output through the prettyprint script.
@@ -196,7 +205,5 @@ def main():
             t = os.system(f"echo '{sentence}' | perl {prettyprint_path}")
         else:
             print(sentence)
-
-
 if __name__ == "__main__":
     main()

@@ -1,0 +1,70 @@
+# grammar3.gr
+
+# Rules for creating full sentences.
+1   ROOT    S .
+1   ROOT    S !
+1   ROOT    is it true that S ?
+
+# Sentence structure
+1   S   NP VP
+1   VP  Verb NP
+1   VP  VP Conj VP
+1   NP  Det Noun
+1   NP  NP PP
+1   PP  Prep NP
+1   Noun    Adj Noun
+
+# Additional rules for new words introduced in the sentences
+1   Sally   NP
+1   president   Noun
+1   sandwich   Noun
+1   wanted   Verb
+1   and   Conj
+1   ate   Verb
+1   sighed   Verb
+1   thought   Verb
+1   that   Conj
+1   it   NP
+1   perplexed   Adj
+1   the   Det
+1   very   Adj
+1   on   Prep
+1   every   Det
+1   proposal   Noun
+1   desk   Noun
+1   worked   Verb
+
+# Vocabulary. Add new words to the vocabulary.
+2   Verb    ate
+2   Verb    wanted
+3   Verb    kissed
+1   Verb    understood
+2   Verb    pickled
+1   Verb    sighed
+1   Verb    thought
+1   Verb    perplexed
+1   Verb    worked
+
+1   Det the
+1   Det a
+1   Det every
+1   Det very
+
+1   Noun    president
+1   Noun    sandwich
+1   Noun    pickle
+1   Noun    chief of staff
+1   Noun    floor
+1   Noun    proposal
+1   Noun    desk
+
+2   Adj fine
+2   Adj delicious
+1   Adj perplexed
+1   Adj pickled
+1   Adj very
+
+1   Prep    with
+1   Prep    on
+1   Prep    under
+1   Prep    in
