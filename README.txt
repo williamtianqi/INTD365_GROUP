@@ -9,7 +9,7 @@ Pedro Santos Sandoval
 1. Provide 10 random sentences generated from your script.
 
 (you can change 10, to 1 for a simple sentence rather than 10 sentences)
-python randsent.py -g grammar.gr -n 10
+python randsent.py -g grammar.gr -M 6 -n 10
 
 
 every president in every pickle under the pickled president ate every perplexed president with every fine floor on a pickle under every chief of staff under a floor on the sandwich under every president on every floor on every president in a pickled president !
@@ -28,7 +28,7 @@ every pickle understood the sandwich with the sandwich on a pickled chief of sta
 2. Provide 2 random sentences generated from your script, using --tree to show their derivations.
 
 (you can change 2, to 1 for a simple sentence rather than 2 sentences)
-python randsent.py -g grammar.gr -n 2 --tree 
+python randsent.py -g grammar.gr -M 6 -n 2 --tree 
 
 
 (ROOT (S (NP (Det (every ))
@@ -97,7 +97,7 @@ python randsent.py -g grammar.gr -n 2 --tree
 3. As in the previous question, but with a --max expansions of 5.
 
 (you can change 2, to 1 for a simple sentence rather than 2 sentences)
-python randsent.py -g grammar.gr -n 2 --tree -M 5
+python randsent.py -g grammar.gr -M 5 -n 2 --tree 
 
 (ROOT (S (NP (Det (a ))
              (Noun (president )))
@@ -125,6 +125,7 @@ python randsent.py -g grammar.gr -n 2 --tree -M 5
 
 1. Why does your program generate so many long sentences? Specifically, what grammar rule (or
 rules) is (or are) responsible and why? What is special about it/them?
+
 
 Program may be generating long sentences due to the recursive nature of the rules, such as NP NP NP and NP PP NP. 
 These rules allow the expansion of noun phrases and prepositional phrases multiple times, leading to longer sentences.
@@ -217,7 +218,7 @@ To favor more natural sets of sentences
 5. Provide 10 random sentences generated with the grammar2.gr.
 
 
-python randsent.py -g grammar2.gr -n 10
+python randsent.py -g grammar2.gr -M 6 -n 10
 
 a chief of staff understood every perplexed sandwich floor chief of staff !
 is it true that every perplexed president president with the sandwich ate the fine pickled sandwich under the perplexed president ? # mixing terminals and nonterminals is ok.
@@ -237,8 +238,18 @@ the delicious floor with a floor with the perplexed floor kissed a delicious flo
 
 10. Provide 10 random sentences generated with grammar3.gr that illustrate your modifications.
 
-For Section 2.2 Testing sections of your grammar Normally randsent.py generates entire sentences starting at ROOT.
-But if you just want to see what noun phrases look like, use the argument -s NP to start with the symbol
-NP and expand it fully.
 
-python randsent.py -g grammar3.gr -n 1 -s NP
+
+python randsent.py -g grammar3.gr -M 6 -n 10 -s NP
+
+
+delicious fine floor
+fine fine chief of staff
+a pickle in with delicious
+floor
+a pickled pickle under floor
+floor in a pickle under with fine pickle
+a chief of staff
+in in
+pickle under under under
+pickle with in a under in pickled floor
