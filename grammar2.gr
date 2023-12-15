@@ -12,7 +12,6 @@
 #
 #    - But your *program* should still work with grammars that don't
 #      follow this convention.  So how can your program reliably tell
-#      the difference between terminal and nonterminal symbols?  If
 #      there is at least one rule for rewriting a symbol, then that
 #      symbol is a nonterminal and should be rewritten.
 #######################
