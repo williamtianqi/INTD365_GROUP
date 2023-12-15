@@ -231,7 +231,11 @@ a fine pickle on every perplexed floor understood a fine sandwich !
 the delicious floor with a floor with the perplexed floor kissed a delicious floor !
 
 
+2.3 Questions continued
+9. Briefly discuss your modifications to the grammar.
 
+
+10. Provide 10 random sentences generated with grammar3.gr that illustrate your modifications.
 
 For Section 2.2 Testing sections of your grammar Normally randsent.py generates entire sentences starting at ROOT.
 But if you just want to see what noun phrases look like, use the argument -s NP to start with the symbol
