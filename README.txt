@@ -7,7 +7,7 @@ Ravneet, Tianqui, Pedro
 1. Provide 10 random sentences generated from your script.
 
 (you can change 10, to 1 for a simple sentence rather than 10 sentences)
-python randsent.py -g grammar.gr -M 6 -n 10
+Command prompt:python randsent.py -g grammar.gr -M 6 -n 10
 
 
 a president understood every sandwich !
@@ -24,7 +24,7 @@ a fine with a floor wanted a chief of staff !
 2. Provide 2 random sentences generated from your script, using --tree to show their derivations.
 
 (you can change 2, to 1 for a simple sentence rather than 2 sentences)
-python randsent.py -g grammar.gr -M 6 -n 2 --tree 
+Command prompt: python randsent.py -g grammar.gr -M 6 -n 2 --tree 
 
 
 (ROOT (S (NP (Det (every ))
@@ -220,7 +220,7 @@ To favor more natural sets of sentences
 5. Provide 10 random sentences generated with the grammar2.gr.
 
 
-python randsent.py -g grammar2.gr -M 6 -n 10
+Command prompt: python randsent.py -g grammar2.gr -M 6 -n 10
 
 a chief of staff understood every perplexed sandwich floor chief of staff !
 is it true that every perplexed president president with the sandwich ate the fine pickled sandwich under the perplexed president ? # mixing terminals and nonterminals is ok.
@@ -237,9 +237,6 @@ the delicious floor with a floor with the perplexed floor kissed a delicious flo
 2.3 Questions continued
 9. Briefly discuss your modifications to the grammar.
 
-
-10. Provide 10 random sentences generated with grammar3.gr that illustrate your modifications.
-
 We have now modiffied our CFG into a PCFG.
 CFG is a context free grammar and PCFG is a probabilistic context free grammar.
 
@@ -250,7 +247,9 @@ For example ->
 here, B is twice as likely to be chosen as the Noun for our sentence.
 Adjusting these relative probabilities allows us to have greater control on sentence generation.
 
-python randsent.py -g grammar3.gr -M 6 -n 10 -s NP
+10. Provide 10 random sentences generated with grammar3.gr that illustrate your modifications.
+
+Command prompt: python randsent.py -g grammar3.gr -M 6 -n 10 -s NP
 
 
 delicious fine floor
